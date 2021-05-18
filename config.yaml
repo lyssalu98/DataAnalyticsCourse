@@ -20,7 +20,7 @@ menu:
       url: https://github.com/lyssalu98
     - name: Twitter
       url: https://twitter.com/lyssalu98
-      name: LinkedIn
+    - name: LinkedIn
       url: https://www.linkedin.com/in/alyssa-van-de-riet-98938418a/
 params:
   MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
