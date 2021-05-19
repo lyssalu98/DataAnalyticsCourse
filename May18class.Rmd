@@ -49,3 +49,48 @@ ggplot(data = starwars, aes(x = height, y = mass)) + geom_point() +
   labs(title = "Mass vs height of Starwars characters", x = "Height (cm)", y = "Weight (kg)")
 ```
 
+### Playing with Anscombes Quartet
+
+```{r message=FALSE}
+library(dplyr)
+library(Tmisc)
+quartet 
+quartet %>%
+  group_by(set) %>%
+  summarise(
+    mean_x = mean(x), 
+    mean_y = mean(y),
+    sd_x = sd(x),
+    sd_y = sd(y),
+    r = cor(x, y)
+  )
+```
+```{r echo=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+ggplot(quartet, aes(x = x, y = y)) + 
+  geom_point() + facet_wrap(~ set, ncol = 4)
+```
+#Second Blog Post From Class
+##Data Visualization Using ggplot2
+###Penguins
+```{r}
+library(palmerpenguins)
+glimpse(penguins)
+```
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+ggplot(data = penguins, 
+       mapping = aes(x = bill_depth_mm, y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Bill depth and length",
+       subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+       x = "Bill depth (mm)", y = "Bill length (mm)",
+       colour = "Species") 
+```
+```{r warning=FALSE, echo=FALSE, message=FALSE}
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point() +
+  facet_grid(species ~ island)
+```
+
