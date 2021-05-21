@@ -1,0 +1,9 @@
+---
+title: 'Assignment A01: GGPLOT2'
+author: Alyssa van de Riet
+date: '2021-05-21'
+slug: assignment-a01-ggplot2
+categories:
+  - ggplot2
+tags: []
+
