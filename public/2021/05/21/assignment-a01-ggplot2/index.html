@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.83.1" />
+
+
+<title>Assignment A01: GGPLOT2 - van de Riet Fundamentals of Analytics</title>
+<meta property="og:title" content="Assignment A01: GGPLOT2 - van de Riet Fundamentals of Analytics">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/my_face.jpg"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/lyssalu98">GitHub</a></li>
+    
+    <li><a href="https://www.linkedin.com/in/alyssa-van-de-riet-98938418a/">LinkedIn</a></li>
+    
+    <li><a href="https://twitter.com/lyssalu98">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">2 min read</span>
+    
+
+    <h1 class="article-title">Assignment A01: GGPLOT2</h1>
+
+    
+    <span class="article-date">2021-05-21</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2021/05/21/assignment-a01-ggplot2/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>##Within this assignment:</p>
+<ul>
+<li>Categorical data visualization</li>
+<li>Numerical data visualization</li>
+<li>Discussion</li>
+</ul>
+<p>##Categorical Data Visualization
+For this assignment, the “quakes” dataset has been selected. Categorical data visualization will be used to present the data, categorized by the numbers of stations that reported the earthquakes.</p>
+<p>###Magnitude vs Stations
+The relationship between the magnitude of the earthquakes and the number of stations that reported them can be seen in this plot. Most often, the larger the magnitude, the more stations reported the earthquake.</p>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.1     v dplyr   1.0.6
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## &#39;data.frame&#39;:    1000 obs. of  5 variables:
+##  $ lat     : num  -20.4 -20.6 -26 -18 -20.4 ...
+##  $ long    : num  182 181 184 182 182 ...
+##  $ depth   : int  562 650 42 626 649 195 82 194 211 622 ...
+##  $ mag     : num  4.8 4.2 5.4 4.1 4 4 4.8 4.4 4.7 4.3 ...
+##  $ stations: int  41 15 43 19 11 12 43 15 35 19 ...</code></pre>
+<p><img src="/2021/05/21/assignment-a01-ggplot2/index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>###Depth vs Stations</p>
+<pre class="r"><code>ggplot(quakes, aes(stations, depth)) +
+  geom_col()</code></pre>
+<p><img src="/2021/05/21/assignment-a01-ggplot2/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>##Numerical Data Visualization</p>
+<p>###Latitude vs Longitude</p>
+<pre class="r"><code>ggplot(quakes, aes(long, lat)) + geom_point()</code></pre>
+<p><img src="/2021/05/21/assignment-a01-ggplot2/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>###Depth vs Magnitude</p>
+<pre class="r"><code>ggplot(quakes, aes(depth, mag)) + geom_point()</code></pre>
+<p><img src="/2021/05/21/assignment-a01-ggplot2/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,79 @@
+---
+title: 'Assignment A01: GGPLOT2'
+author: Alyssa van de Riet
+date: '2021-05-21'
+slug: assignment-a01-ggplot2
+categories:
+  - ggplot2
+  - assignment
+tags: []
+---
+
+
+
+
+## Within this assignment:
+
+
+* Categorical data visualization
+* Numerical data visualization
+* Discussion
+
+## Categorical Data Visualization
+
+
+### Species Petal Widths
+ 
+
+```{r echo=FALSE, message=FALSE}
+library(tidyverse)
+ggplot(iris, aes(Species, Petal.Width, color = Species)) + 
+  geom_point() +
+  theme_light() +
+  theme(axis.title.x = element_blank()) + 
+  ggtitle("Iris Petal Widths per Species") +
+  xlab("Species") + ylab("Petal Width")
+
+```
+
+### Species Petal Lengths
+
+```{r echo=FALSE, message=FALSE}
+ggplot(iris, aes(Species, Petal.Length, color = Species)) +
+  geom_point() +
+  theme_light() +
+  theme(axis.title.x = element_blank()) +
+    ggtitle("Iris Petal Lengths per Species") +
+  xlab("Species") + ylab("Petal Length")
+```
+
+## Numerical Data Visualization
+
+
+
+### Sepal Length vs Width
+
+```{r}
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
+  geom_point() + 
+  theme_light() +
+  ggtitle("Comparing Sepal Lengths and Widths") +
+  xlab("Sepal Length") + ylab("Sepal Width")
+
+```
+
+
+### Petal Length vs Sepal Lengths
+
+```{r}
+ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) + 
+  geom_point() + 
+  theme_light() +
+  ggtitle("Comparing Petal and Sepal Lengths") +
+  xlab("Petal Length") + ylab("Sepal Length")
+```
+
+
+## Discussion
+
+#### Within this assignment, I had difficulties finding a dataset that provided data that I felt would allow me to adequately meet the assignment requirements. Within the coding, I found I struggled with remembering what command to use when, which drove home the lesson that DataCamp should only be used for practice. I opted for the Iris dataset since it had designated categories in the form of species. It is interesting to see the "behind the scenes" of how coding can be used for data analysis. Creating these plots helped show the differences betweent the iris species, which the average person would not have originally considered. 

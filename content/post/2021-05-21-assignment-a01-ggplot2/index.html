@@ -1,0 +1,60 @@
+---
+title: 'Assignment A01: GGPLOT2'
+author: Alyssa van de Riet
+date: '2021-05-21'
+slug: assignment-a01-ggplot2
+categories:
+  - ggplot2
+  - assignment
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="within-this-assignment" class="section level2">
+<h2>Within this assignment:</h2>
+<ul>
+<li>Categorical data visualization</li>
+<li>Numerical data visualization</li>
+<li>Discussion</li>
+</ul>
+</div>
+<div id="categorical-data-visualization" class="section level2">
+<h2>Categorical Data Visualization</h2>
+<div id="species-petal-widths" class="section level3">
+<h3>Species Petal Widths</h3>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="species-petal-lengths" class="section level3">
+<h3>Species Petal Lengths</h3>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+</div>
+<div id="numerical-data-visualization" class="section level2">
+<h2>Numerical Data Visualization</h2>
+<div id="sepal-length-vs-width" class="section level3">
+<h3>Sepal Length vs Width</h3>
+<pre class="r"><code>ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + 
+  geom_point() + 
+  theme_light() +
+  ggtitle(&quot;Comparing Sepal Lengths and Widths&quot;) +
+  xlab(&quot;Sepal Length&quot;) + ylab(&quot;Sepal Width&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="petal-length-vs-sepal-lengths" class="section level3">
+<h3>Petal Length vs Sepal Lengths</h3>
+<pre class="r"><code>ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) + 
+  geom_point() + 
+  theme_light() +
+  ggtitle(&quot;Comparing Petal and Sepal Lengths&quot;) +
+  xlab(&quot;Petal Length&quot;) + ylab(&quot;Sepal Length&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<div id="within-this-assignment-i-had-difficulties-finding-a-dataset-that-provided-data-that-i-felt-would-allow-me-to-adequately-meet-the-assignment-requirements.-within-the-coding-i-found-i-struggled-with-remembering-what-command-to-use-when-which-drove-home-the-lesson-that-datacamp-should-only-be-used-for-practice.-i-opted-for-the-iris-dataset-since-it-had-designated-categories-in-the-form-of-species.-it-is-interesting-to-see-the-behind-the-scenes-of-how-coding-can-be-used-for-data-analysis.-creating-these-plots-helped-show-the-differences-betweent-the-iris-species-which-the-average-person-would-not-have-originally-considered." class="section level4">
+<h4>Within this assignment, I had difficulties finding a dataset that provided data that I felt would allow me to adequately meet the assignment requirements. Within the coding, I found I struggled with remembering what command to use when, which drove home the lesson that DataCamp should only be used for practice. I opted for the Iris dataset since it had designated categories in the form of species. It is interesting to see the “behind the scenes” of how coding can be used for data analysis. Creating these plots helped show the differences betweent the iris species, which the average person would not have originally considered.</h4>
+</div>
+</div>
