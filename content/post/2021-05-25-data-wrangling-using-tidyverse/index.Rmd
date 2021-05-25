@@ -68,9 +68,19 @@ hotels %>%
 ## Mutation
 
 ```{r}
-hotels %>%
+little_ones <- hotels 
+little_ones %<>%
   mutate(little_ones = children + babies) %>%
   select(children, babies, little_ones) %>%
   arrange(desc(little_ones))
+```
+
+## Summary
+
+```{r}
+summary <- hotels %>%
+  group_by(hotel) %>%
+  summarise(mean_adr = mean(adr))
+summary
 ```
 
