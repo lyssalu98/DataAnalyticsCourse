@@ -13,9 +13,7 @@
       <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
       
       <guid>/2021/05/21/assignment-a01-ggplot2/</guid>
-      <description>##Within this assignment:
-Categorical data visualizationNumerical data visualizationDiscussion##Categorical Data VisualizationFor this assignment, the “quakes” dataset has been selected. Categorical data visualization will be used to present the data, categorized by the numbers of stations that reported the earthquakes.
-###Magnitude vs StationsThe relationship between the magnitude of the earthquakes and the number of stations that reported them can be seen in this plot.</description>
+      <description>Within this assignment:Categorical data visualizationNumerical data visualizationDiscussionCategorical Data VisualizationSpecies Petal WidthsSpecies Petal LengthsNumerical Data VisualizationSepal Length vs Widthggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) + geom_point() + theme_light() +ggtitle(&amp;quot;Comparing Sepal Lengths and Widths&amp;quot;) +xlab(&amp;quot;Sepal Length&amp;quot;) + ylab(&amp;quot;Sepal Width&amp;quot;)Petal Length vs Sepal Lengthsggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) + geom_point() + theme_light() +ggtitle(&amp;quot;Comparing Petal and Sepal Lengths&amp;quot;) +xlab(&amp;quot;Petal Length&amp;quot;) + ylab(&amp;quot;Sepal Length&amp;quot;)DiscussionWithin this assignment, I had difficulties finding a dataset that provided data that I felt would allow me to adequately meet the assignment requirements.</description>
     </item>
     
   </channel>
