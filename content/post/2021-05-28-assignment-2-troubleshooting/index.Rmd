@@ -1,0 +1,29 @@
+---
+title: Assignment 2 Troubleshooting
+author: Alyssa van de Riet
+date: '2021-05-28'
+slug: assignment-2-troubleshooting
+categories:
+  - assignment
+  - troubeshooting
+tags: []
+---
+
+### Loading packages and data
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+hotels <- read_csv("hotels.csv")
+
+hotels
+```
+
+```{r}
+popular_stays <- hotels %>%
+  select(hotels, hotel, country, reserved_room_type)
+
+popular_stays
+```
+

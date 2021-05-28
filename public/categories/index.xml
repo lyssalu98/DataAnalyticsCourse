@@ -6,31 +6,49 @@
     <description>Recent content in Categories on van de Riet Fundamentals of Analytics</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>basics</title>
-      <link>/categories/basics/</link>
-      <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
+      <title>assignment</title>
+      <link>/categories/assignment/</link>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/categories/basics/</guid>
+      <guid>/categories/assignment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>troubeshooting</title>
+      <link>/categories/troubeshooting/</link>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/troubeshooting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dplyr</title>
+      <link>/categories/dplyr/</link>
+      <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/dplyr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tidyverse</title>
       <link>/categories/tidyverse/</link>
-      <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
       
       <guid>/categories/tidyverse/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>assignment</title>
-      <link>/categories/assignment/</link>
-      <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
+      <title>basics</title>
+      <link>/categories/basics/</link>
+      <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/categories/assignment/</guid>
+      <guid>/categories/basics/</guid>
       <description></description>
     </item>
     

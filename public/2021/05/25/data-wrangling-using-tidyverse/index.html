@@ -64,7 +64,7 @@
 
   <article class="article">
     
-    <span class="article-duration">7 min read</span>
+    <span class="article-duration">6 min read</span>
     
 
     <h1 class="article-title">Data Wrangling using Tidyverse</h1>
@@ -309,24 +309,23 @@ hotels %&gt;%
 </div>
 <div id="mutation" class="section level2">
 <h2>Mutation</h2>
-<pre class="r"><code>hotels %&gt;%
+<pre class="r"><code>little_ones &lt;- hotels 
+little_ones %&lt;&gt;%
   mutate(little_ones = children + babies) %&gt;%
   select(children, babies, little_ones) %&gt;%
   arrange(desc(little_ones))</code></pre>
-<pre><code>## # A tibble: 119,390 x 3
-##    children babies little_ones
-##       &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;
-##  1       10      0          10
-##  2        0     10          10
-##  3        0      9           9
-##  4        2      1           3
-##  5        2      1           3
-##  6        2      1           3
-##  7        3      0           3
-##  8        2      1           3
-##  9        2      1           3
-## 10        3      0           3
-## # ... with 119,380 more rows</code></pre>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<pre class="r"><code>summary &lt;- hotels %&gt;%
+  group_by(hotel) %&gt;%
+  summarise(mean_adr = mean(adr))
+summary</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   hotel        mean_adr
+##   &lt;chr&gt;           &lt;dbl&gt;
+## 1 City Hotel      105. 
+## 2 Resort Hotel     95.0</code></pre>
 </div>
 
     </div>
