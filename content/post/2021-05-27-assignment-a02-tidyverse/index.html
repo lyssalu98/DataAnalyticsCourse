@@ -12,3 +12,384 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<div id="within-this-assignment" class="section level3">
+<h3>Within this assignment:</h3>
+<ul>
+<li>One table verbs</li>
+<li>Two table verbs</li>
+<li>Pivoting</li>
+<li>Missing Values</li>
+<li>Grouping</li>
+<li>Vector</li>
+<li>Discussion</li>
+</ul>
+</div>
+<div id="loading-friends_info-dataset" class="section level2">
+<h2>Loading Friends_Info Dataset</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.1     v dplyr   1.0.6
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(dplyr)
+library(tidyr)
+friends &lt;- read_csv(&quot;friends_info.csv&quot;)</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   Date = col_character(),
+##   Episode = col_character(),
+##   Title = col_character(),
+##   `Directed by` = col_character(),
+##   `Written by` = col_character(),
+##   Duration = col_double(),
+##   Summary = col_character(),
+##   `Rating/Share` = col_character(),
+##   `U.S. viewers` = col_character(),
+##   `Prod.
+## code` = col_character()
+## )</code></pre>
+<pre class="r"><code>friends</code></pre>
+<pre><code>## # A tibble: 229 x 10
+##    Date   Episode Title      `Directed by` `Written by`  Duration Summary       
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;         
+##  1 09/22~ 01-01   The Pilot  James Burrows David Crane ~       22 &quot;Monica and t~
+##  2 09/29~ 01-02   The One w~ James Burrows David Crane ~       22 &quot;Ross finds o~
+##  3 10/06~ 01-03   The One w~ James Burrows Jeffrey Astr~       22 &quot;Monica becom~
+##  4 10/13~ 01-04   The One w~ James Burrows Alexa Junge         22 &quot;Joey and Cha~
+##  5 10/20~ 01-05   The One w~ Pamela Fryman Jeff Greenst~       22 &quot;Eager to spe~
+##  6 10/27~ 01-06   The One w~ Arlene Sanfo~ Adam Chase &amp;~       22 &quot;Monica&#39;s obs~
+##  7 11/03~ 01-07   The One w~ James Burrows Jeffrey Astr~       22 &quot;When New Yor~
+##  8 11/10~ 01-08   The One W~ James Burrows Marta Kauffm~       22 &quot;Monica and R~
+##  9 11/17~ 01-09   The One W~ James Burrows Jeff Greenst~       22 &quot;The gang&#39;s p~
+## 10 12/15~ 01-10   The One w~ Peter Bonerz  Adam Chase &amp;~       22 &quot;The gang mak~
+## # ... with 219 more rows, and 3 more variables: Rating/Share &lt;chr&gt;,
+## #   U.S. viewers &lt;chr&gt;, Prod. code &lt;chr&gt;</code></pre>
+</div>
+<div id="pivoting-the-data" class="section level2">
+<h2>Pivoting the Data</h2>
+<div id="the-dataset-selected-for-this-assignment-is-not-easily-pivoted-as-all-columns-can-stand-alone-and-do-not-necessarily-need-to-be-combined-to-clarify-or-simplify-the-data.-to-exemplify-this-the-gather-and-pivot_longer-functions-were-used.-as-shown-by-the-output-there-is-not-much-gained-from-using-these-functions-with-this-data-it-is-already-fairly-tidy." class="section level3">
+<h3>The dataset selected for this assignment is not easily pivoted as all columns can stand alone and do not necessarily need to be combined to clarify or simplify the data. To exemplify this, the gather() and pivot_longer() functions were used. As shown by the output, there is not much gained from using these functions with this data (it is already fairly tidy).</h3>
+<pre class="r"><code>Directors &lt;- friends %&gt;%
+  select(Episode, `Prod.
+code`, `Rating/Share`, `Directed by`) 
+  
+
+rename(Directors, `director(s)` = `Directed by`)</code></pre>
+<pre><code>## # A tibble: 229 x 4
+##    Episode `Prod.\ncode` `Rating/Share` `director(s)` 
+##    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;         
+##  1 01-01   456650        14.7/23        James Burrows 
+##  2 01-02   456652        14.0/22        James Burrows 
+##  3 01-03   456651        13.6/22        James Burrows 
+##  4 01-04   456654        13.7/22        James Burrows 
+##  5 01-05   456653        12.9/20        Pamela Fryman 
+##  6 01-06   456655        12.4/20        Arlene Sanford
+##  7 01-07   456656        16.1/24        James Burrows 
+##  8 01-08   456657        14.2/22        James Burrows 
+##  9 01-09   456659        15.7/24        James Burrows 
+## 10 01-10   456661        13.6/22        Peter Bonerz  
+## # ... with 219 more rows</code></pre>
+<pre class="r"><code>gather(Directors, key = `Prod. code`, value = Episode)</code></pre>
+<pre><code>## # A tibble: 687 x 2
+##    `Prod. code`  Episode
+##    &lt;chr&gt;         &lt;chr&gt;  
+##  1 &quot;Prod.\ncode&quot; 456650 
+##  2 &quot;Prod.\ncode&quot; 456652 
+##  3 &quot;Prod.\ncode&quot; 456651 
+##  4 &quot;Prod.\ncode&quot; 456654 
+##  5 &quot;Prod.\ncode&quot; 456653 
+##  6 &quot;Prod.\ncode&quot; 456655 
+##  7 &quot;Prod.\ncode&quot; 456656 
+##  8 &quot;Prod.\ncode&quot; 456657 
+##  9 &quot;Prod.\ncode&quot; 456659 
+## 10 &quot;Prod.\ncode&quot; 456661 
+## # ... with 677 more rows</code></pre>
+<pre class="r"><code>pivot_longer(friends, 
+  Title, 
+  names_to = &quot;ID&quot;, 
+  values_to = &quot;code&quot;)</code></pre>
+<pre><code>## # A tibble: 229 x 11
+##    Date   Episode `Directed by`  `Written by` Duration Summary    `Rating/Share`
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;         
+##  1 09/22~ 01-01   James Burrows  David Crane~       22 &quot;Monica a~ 14.7/23       
+##  2 09/29~ 01-02   James Burrows  David Crane~       22 &quot;Ross fin~ 14.0/22       
+##  3 10/06~ 01-03   James Burrows  Jeffrey Ast~       22 &quot;Monica b~ 13.6/22       
+##  4 10/13~ 01-04   James Burrows  Alexa Junge        22 &quot;Joey and~ 13.7/22       
+##  5 10/20~ 01-05   Pamela Fryman  Jeff Greens~       22 &quot;Eager to~ 12.9/20       
+##  6 10/27~ 01-06   Arlene Sanford Adam Chase ~       22 &quot;Monica&#39;s~ 12.4/20       
+##  7 11/03~ 01-07   James Burrows  Jeffrey Ast~       22 &quot;When New~ 16.1/24       
+##  8 11/10~ 01-08   James Burrows  Marta Kauff~       22 &quot;Monica a~ 14.2/22       
+##  9 11/17~ 01-09   James Burrows  Jeff Greens~       22 &quot;The gang~ 15.7/24       
+## 10 12/15~ 01-10   Peter Bonerz   Adam Chase ~       22 &quot;The gang~ 13.6/22       
+## # ... with 219 more rows, and 4 more variables: U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;, ID &lt;chr&gt;, code &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="creating-subsets" class="section level2">
+<h2>Creating subsets</h2>
+<pre class="r"><code>James_Burrows &lt;- friends %&gt;%
+  filter(`Directed by` == &quot;James Burrows&quot;)
+  
+James_Burrows %&gt;% summarize(median(Duration))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   `median(Duration)`
+##                &lt;dbl&gt;
+## 1                 22</code></pre>
+<pre class="r"><code>James_Burrows</code></pre>
+<pre><code>## # A tibble: 15 x 10
+##    Date   Episode Title    `Directed by` `Written by`      Duration Summary     
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       
+##  1 09/22~ 01-01   The Pil~ James Burrows &quot;David Crane &amp; M~       22 &quot;Monica and~
+##  2 09/29~ 01-02   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross finds~
+##  3 10/06~ 01-03   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;Monica bec~
+##  4 10/13~ 01-04   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Joey and C~
+##  5 11/03~ 01-07   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;When New Y~
+##  6 11/10~ 01-08   The One~ James Burrows &quot;Marta Kauffman ~       22 &quot;Monica and~
+##  7 11/17~ 01-09   The One~ James Burrows &quot;Jeff Greenstein~       22 &quot;The gang&#39;s~
+##  8 01/05~ 01-11   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Chandler&#39;s~
+##  9 02/09~ 01-14   The One~ James Burrows &quot;Bill Lawrence&quot;         22 &quot;As Valenti~
+## 10 03/02~ 01-18   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;As Rachel ~
+## 11 05/11~ 01-23   The One~ James Burrows &quot;Story by : Davi~       22 &quot;As Carol g~
+## 12 02/01~ 02-14   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;The gang w~
+## 13 02/13~ 03-15   The One~ James Burrows &quot;Michael Borkow&quot;        22 &quot;Ross seeks~
+## 14 02/20~ 03-16   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross is gu~
+## 15 02/26~ 04-15   The One~ James Burrows &quot;Story by : Ted ~       22 &quot;Chandler r~
+## # ... with 3 more variables: Rating/Share &lt;chr&gt;, U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;</code></pre>
+<pre class="r"><code>Pamela_Fryman &lt;- friends %&gt;%
+    filter(`Directed by` == &quot;Pamela Fryman&quot;)
+
+Pamela_Fryman</code></pre>
+<pre><code>## # A tibble: 2 x 10
+##   Date  Episode Title `Directed by` `Written by` Duration Summary `Rating/Share`
+##   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;         
+## 1 10/2~ 01-05   The ~ Pamela Fryman &quot;Jeff Green~       22 Eager ~ 12.9/20       
+## 2 05/1~ 03-25   The ~ Pamela Fryman &quot;Story by :~       22 While ~ 16.5/29       
+## # ... with 2 more variables: U.S. viewers &lt;chr&gt;, Prod. code &lt;chr&gt;</code></pre>
+<pre class="r"><code>Michael_Lembeck &lt;- friends %&gt;%
+  filter(`Directed by` == &quot;Michael Lembeck&quot;)
+
+Michael_Lembeck</code></pre>
+<pre><code>## # A tibble: 22 x 10
+##    Date   Episode  Title    `Directed by` `Written by`    Duration Summary      
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;        
+##  1 02/23~ &quot;01-16&quot;  The One~ Michael Lemb~ &quot;Marta Kauffma~       22 &quot;Phoebe feel~
+##  2 02/23~ &quot;01-17&quot;  The One~ Michael Lemb~ &quot;Marta Kauffma~       22 &quot;Rachel swit~
+##  3 09/21~ &quot;02-01&quot;  The One~ Michael Lemb~ &quot;Jeffrey Astro~       22 &quot;Rachel wait~
+##  4 09/28~ &quot;02-02&quot;  The One~ Michael Lemb~ &quot;Adam Chase &amp; ~       22 &quot;Monica goes~
+##  5 01/28~ &quot;02-12\~ The One~ Michael Lemb~ &quot;Jeffrey Astro~       44 &quot;Ross goes t~
+##  6 02/08~ &quot;02-15&quot;  The One~ Michael Lemb~ &quot;Michael Curti~       22 &quot;Monica beco~
+##  7 02/15~ &quot;02-16&quot;  The One~ Michael Lemb~ &quot;Betsy Borns&quot;         22 &quot;Joey and Ch~
+##  8 02/22~ &quot;02-17&quot;  The One~ Michael Lemb~ &quot;Adam Chase&quot;          22 &quot;Chandler ge~
+##  9 03/21~ &quot;02-18&quot;  The One~ Michael Lemb~ &quot;Story by : Al~       22 &quot;Joey&#39;s soap~
+## 10 03/28~ &quot;02-19&quot;  The One~ Michael Lemb~ &quot;Michael Curti~       22 &quot;Chandler de~
+## # ... with 12 more rows, and 3 more variables: Rating/Share &lt;chr&gt;,
+## #   U.S. viewers &lt;chr&gt;, Prod. code &lt;chr&gt;</code></pre>
+<pre class="r"><code>Burrows_Episodes &lt;- semi_join(James_Burrows, Directors)</code></pre>
+<pre><code>## Joining, by = c(&quot;Episode&quot;, &quot;Directed by&quot;, &quot;Rating/Share&quot;, &quot;Prod.\ncode&quot;)</code></pre>
+<pre class="r"><code>Burrows_Episodes</code></pre>
+<pre><code>## # A tibble: 15 x 10
+##    Date   Episode Title    `Directed by` `Written by`      Duration Summary     
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       
+##  1 09/22~ 01-01   The Pil~ James Burrows &quot;David Crane &amp; M~       22 &quot;Monica and~
+##  2 09/29~ 01-02   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross finds~
+##  3 10/06~ 01-03   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;Monica bec~
+##  4 10/13~ 01-04   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Joey and C~
+##  5 11/03~ 01-07   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;When New Y~
+##  6 11/10~ 01-08   The One~ James Burrows &quot;Marta Kauffman ~       22 &quot;Monica and~
+##  7 11/17~ 01-09   The One~ James Burrows &quot;Jeff Greenstein~       22 &quot;The gang&#39;s~
+##  8 01/05~ 01-11   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Chandler&#39;s~
+##  9 02/09~ 01-14   The One~ James Burrows &quot;Bill Lawrence&quot;         22 &quot;As Valenti~
+## 10 03/02~ 01-18   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;As Rachel ~
+## 11 05/11~ 01-23   The One~ James Burrows &quot;Story by : Davi~       22 &quot;As Carol g~
+## 12 02/01~ 02-14   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;The gang w~
+## 13 02/13~ 03-15   The One~ James Burrows &quot;Michael Borkow&quot;        22 &quot;Ross seeks~
+## 14 02/20~ 03-16   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross is gu~
+## 15 02/26~ 04-15   The One~ James Burrows &quot;Story by : Ted ~       22 &quot;Chandler r~
+## # ... with 3 more variables: Rating/Share &lt;chr&gt;, U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;</code></pre>
+</div>
+<div id="dropping-missing-values" class="section level2">
+<h2>Dropping missing values</h2>
+<div id="in-this-section-you-can-see-how-the-others_episodes-data-frame-drops-from-the-original-229-episodes-to-212-episodes-dropping-not-only-the-15-episodes-that-burrows-directed-but-also-2-rows-with-had-missing-values.to-determine-if-any-of-the-episodes-directed-by-burrows-had-missing-values-as-well-drop_na-was-used.-the-resulting-data-set-still-had-15-rows-indicating-that-there-was-no-missing-information-in-these-rows." class="section level3">
+<h3>In this section you can see how the Others_Episodes data frame drops from the original 229 episodes to 212 episodes, dropping not only the 15 episodes that Burrows directed, but also 2 rows with had missing values.To determine if any of the episodes directed by Burrows had missing values as well, drop_na() was used. The resulting data set still had 15 rows, indicating that there was no missing information in these rows.</h3>
+<pre class="r"><code>library(tidyverse)
+library(dplyr)
+library(tidyr)
+Others_Episodes &lt;- anti_join(Directors, Burrows_Episodes) %&gt;%
+  drop_na()</code></pre>
+<pre><code>## Joining, by = c(&quot;Episode&quot;, &quot;Prod.\ncode&quot;, &quot;Rating/Share&quot;, &quot;Directed by&quot;)</code></pre>
+<pre class="r"><code>Others_Episodes</code></pre>
+<pre><code>## # A tibble: 212 x 4
+##    Episode `Prod.\ncode` `Rating/Share` `Directed by`  
+##    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;          &lt;chr&gt;          
+##  1 01-05   456653        12.9/20        Pamela Fryman  
+##  2 01-06   456655        12.4/20        Arlene Sanford 
+##  3 01-10   456661        13.6/22        Peter Bonerz   
+##  4 01-12   456658        16.1/25        Paul Lazarus   
+##  5 01-13   456664        17.3/26        Alan Myerson   
+##  6 01-15   456663        16.9/25        Alan Myerson   
+##  7 01-16   456665A       17.5/27        Michael Lembeck
+##  8 01-17   456665B       20.8/31        Michael Lembeck
+##  9 01-19   456668        20.0/31        Peter Bonerz   
+## 10 01-20   456669        20.5/32        Peter Bonerz   
+## # ... with 202 more rows</code></pre>
+<pre class="r"><code>Burrows_Episodes %&gt;% drop_na()</code></pre>
+<pre><code>## # A tibble: 15 x 10
+##    Date   Episode Title    `Directed by` `Written by`      Duration Summary     
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       
+##  1 09/22~ 01-01   The Pil~ James Burrows &quot;David Crane &amp; M~       22 &quot;Monica and~
+##  2 09/29~ 01-02   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross finds~
+##  3 10/06~ 01-03   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;Monica bec~
+##  4 10/13~ 01-04   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Joey and C~
+##  5 11/03~ 01-07   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;When New Y~
+##  6 11/10~ 01-08   The One~ James Burrows &quot;Marta Kauffman ~       22 &quot;Monica and~
+##  7 11/17~ 01-09   The One~ James Burrows &quot;Jeff Greenstein~       22 &quot;The gang&#39;s~
+##  8 01/05~ 01-11   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Chandler&#39;s~
+##  9 02/09~ 01-14   The One~ James Burrows &quot;Bill Lawrence&quot;         22 &quot;As Valenti~
+## 10 03/02~ 01-18   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;As Rachel ~
+## 11 05/11~ 01-23   The One~ James Burrows &quot;Story by : Davi~       22 &quot;As Carol g~
+## 12 02/01~ 02-14   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;The gang w~
+## 13 02/13~ 03-15   The One~ James Burrows &quot;Michael Borkow&quot;        22 &quot;Ross seeks~
+## 14 02/20~ 03-16   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross is gu~
+## 15 02/26~ 04-15   The One~ James Burrows &quot;Story by : Ted ~       22 &quot;Chandler r~
+## # ... with 3 more variables: Rating/Share &lt;chr&gt;, U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;</code></pre>
+<pre class="r"><code>Burrows_Episodes</code></pre>
+<pre><code>## # A tibble: 15 x 10
+##    Date   Episode Title    `Directed by` `Written by`      Duration Summary     
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       
+##  1 09/22~ 01-01   The Pil~ James Burrows &quot;David Crane &amp; M~       22 &quot;Monica and~
+##  2 09/29~ 01-02   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross finds~
+##  3 10/06~ 01-03   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;Monica bec~
+##  4 10/13~ 01-04   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Joey and C~
+##  5 11/03~ 01-07   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;When New Y~
+##  6 11/10~ 01-08   The One~ James Burrows &quot;Marta Kauffman ~       22 &quot;Monica and~
+##  7 11/17~ 01-09   The One~ James Burrows &quot;Jeff Greenstein~       22 &quot;The gang&#39;s~
+##  8 01/05~ 01-11   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Chandler&#39;s~
+##  9 02/09~ 01-14   The One~ James Burrows &quot;Bill Lawrence&quot;         22 &quot;As Valenti~
+## 10 03/02~ 01-18   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;As Rachel ~
+## 11 05/11~ 01-23   The One~ James Burrows &quot;Story by : Davi~       22 &quot;As Carol g~
+## 12 02/01~ 02-14   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;The gang w~
+## 13 02/13~ 03-15   The One~ James Burrows &quot;Michael Borkow&quot;        22 &quot;Ross seeks~
+## 14 02/20~ 03-16   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross is gu~
+## 15 02/26~ 04-15   The One~ James Burrows &quot;Story by : Ted ~       22 &quot;Chandler r~
+## # ... with 3 more variables: Rating/Share &lt;chr&gt;, U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;</code></pre>
+<pre class="r"><code>rename(friends, Director = `Directed by`, Writers = `Written by`, USviews = `U.S. viewers`, code = `Prod.\ncode`, RatingperShare = `Rating/Share`)</code></pre>
+<pre><code>## # A tibble: 229 x 10
+##    Date   Episode Title Director Writers Duration Summary RatingperShare USviews
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;  
+##  1 09/22~ 01-01   The ~ James B~ David ~       22 &quot;Monic~ 14.7/23        21.5 m~
+##  2 09/29~ 01-02   The ~ James B~ David ~       22 &quot;Ross ~ 14.0/22        20.2 m~
+##  3 10/06~ 01-03   The ~ James B~ Jeffre~       22 &quot;Monic~ 13.6/22        19.5 m~
+##  4 10/13~ 01-04   The ~ James B~ Alexa ~       22 &quot;Joey ~ 13.7/22        19.7 m~
+##  5 10/20~ 01-05   The ~ Pamela ~ Jeff G~       22 &quot;Eager~ 12.9/20        18.6 m~
+##  6 10/27~ 01-06   The ~ Arlene ~ Adam C~       22 &quot;Monic~ 12.4/20        18.2 m~
+##  7 11/03~ 01-07   The ~ James B~ Jeffre~       22 &quot;When ~ 16.1/24        23.5 m~
+##  8 11/10~ 01-08   The ~ James B~ Marta ~       22 &quot;Monic~ 14.2/22        21.1 m~
+##  9 11/17~ 01-09   The ~ James B~ Jeff G~       22 &quot;The g~ 15.7/24        23.1 m~
+## 10 12/15~ 01-10   The ~ Peter B~ Adam C~       22 &quot;The g~ 13.6/22        19.9 m~
+## # ... with 219 more rows, and 1 more variable: code &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="grouping-data" class="section level2">
+<h2>Grouping Data</h2>
+<div id="due-to-the-nature-of-the-data-within-the-james-burrows-dataset-when-grouping-the-data-by-production-code-there-is-no-change-to-the-order.-this-is-because-the-production-codes-are-unique-identifiers.-however-using-the-order-command-allows-this-to-happen.-this-is-shown-again-in-the-michael-lembeck-dataset-and-the-title-variable." class="section level3">
+<h3>Due to the nature of the data within the James Burrows dataset, when grouping the data by Production code there is no change to the order. This is because the production codes are unique identifiers. However, using the order command allows this to happen. This is shown again in the Michael Lembeck dataset and the Title variable.</h3>
+<pre class="r"><code>James_Burrows %&gt;% group_by(`Prod.
+code`) </code></pre>
+<pre><code>## # A tibble: 15 x 10
+## # Groups:   Prod. code [15]
+##    Date   Episode Title    `Directed by` `Written by`      Duration Summary     
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       
+##  1 09/22~ 01-01   The Pil~ James Burrows &quot;David Crane &amp; M~       22 &quot;Monica and~
+##  2 09/29~ 01-02   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross finds~
+##  3 10/06~ 01-03   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;Monica bec~
+##  4 10/13~ 01-04   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Joey and C~
+##  5 11/03~ 01-07   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;When New Y~
+##  6 11/10~ 01-08   The One~ James Burrows &quot;Marta Kauffman ~       22 &quot;Monica and~
+##  7 11/17~ 01-09   The One~ James Burrows &quot;Jeff Greenstein~       22 &quot;The gang&#39;s~
+##  8 01/05~ 01-11   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Chandler&#39;s~
+##  9 02/09~ 01-14   The One~ James Burrows &quot;Bill Lawrence&quot;         22 &quot;As Valenti~
+## 10 03/02~ 01-18   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;As Rachel ~
+## 11 05/11~ 01-23   The One~ James Burrows &quot;Story by : Davi~       22 &quot;As Carol g~
+## 12 02/01~ 02-14   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;The gang w~
+## 13 02/13~ 03-15   The One~ James Burrows &quot;Michael Borkow&quot;        22 &quot;Ross seeks~
+## 14 02/20~ 03-16   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross is gu~
+## 15 02/26~ 04-15   The One~ James Burrows &quot;Story by : Ted ~       22 &quot;Chandler r~
+## # ... with 3 more variables: Rating/Share &lt;chr&gt;, U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;</code></pre>
+<pre class="r"><code>James_Burrows[order(James_Burrows$`Prod.
+code`),]</code></pre>
+<pre><code>## # A tibble: 15 x 10
+##    Date   Episode Title    `Directed by` `Written by`      Duration Summary     
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       
+##  1 09/22~ 01-01   The Pil~ James Burrows &quot;David Crane &amp; M~       22 &quot;Monica and~
+##  2 10/06~ 01-03   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;Monica bec~
+##  3 09/29~ 01-02   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross finds~
+##  4 10/13~ 01-04   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Joey and C~
+##  5 11/03~ 01-07   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;When New Y~
+##  6 11/10~ 01-08   The One~ James Burrows &quot;Marta Kauffman ~       22 &quot;Monica and~
+##  7 11/17~ 01-09   The One~ James Burrows &quot;Jeff Greenstein~       22 &quot;The gang&#39;s~
+##  8 01/05~ 01-11   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Chandler&#39;s~
+##  9 03/02~ 01-18   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;As Rachel ~
+## 10 02/09~ 01-14   The One~ James Burrows &quot;Bill Lawrence&quot;         22 &quot;As Valenti~
+## 11 05/11~ 01-23   The One~ James Burrows &quot;Story by : Davi~       22 &quot;As Carol g~
+## 12 02/01~ 02-14   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;The gang w~
+## 13 02/13~ 03-15   The One~ James Burrows &quot;Michael Borkow&quot;        22 &quot;Ross seeks~
+## 14 02/20~ 03-16   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross is gu~
+## 15 02/26~ 04-15   The One~ James Burrows &quot;Story by : Ted ~       22 &quot;Chandler r~
+## # ... with 3 more variables: Rating/Share &lt;chr&gt;, U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;</code></pre>
+<pre class="r"><code>Michael_Lembeck %&gt;% group_by(`Title`) </code></pre>
+<pre><code>## # A tibble: 22 x 10
+## # Groups:   Title [22]
+##    Date   Episode  Title    `Directed by` `Written by`    Duration Summary      
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;        
+##  1 02/23~ &quot;01-16&quot;  The One~ Michael Lemb~ &quot;Marta Kauffma~       22 &quot;Phoebe feel~
+##  2 02/23~ &quot;01-17&quot;  The One~ Michael Lemb~ &quot;Marta Kauffma~       22 &quot;Rachel swit~
+##  3 09/21~ &quot;02-01&quot;  The One~ Michael Lemb~ &quot;Jeffrey Astro~       22 &quot;Rachel wait~
+##  4 09/28~ &quot;02-02&quot;  The One~ Michael Lemb~ &quot;Adam Chase &amp; ~       22 &quot;Monica goes~
+##  5 01/28~ &quot;02-12\~ The One~ Michael Lemb~ &quot;Jeffrey Astro~       44 &quot;Ross goes t~
+##  6 02/08~ &quot;02-15&quot;  The One~ Michael Lemb~ &quot;Michael Curti~       22 &quot;Monica beco~
+##  7 02/15~ &quot;02-16&quot;  The One~ Michael Lemb~ &quot;Betsy Borns&quot;         22 &quot;Joey and Ch~
+##  8 02/22~ &quot;02-17&quot;  The One~ Michael Lemb~ &quot;Adam Chase&quot;          22 &quot;Chandler ge~
+##  9 03/21~ &quot;02-18&quot;  The One~ Michael Lemb~ &quot;Story by : Al~       22 &quot;Joey&#39;s soap~
+## 10 03/28~ &quot;02-19&quot;  The One~ Michael Lemb~ &quot;Michael Curti~       22 &quot;Chandler de~
+## # ... with 12 more rows, and 3 more variables: Rating/Share &lt;chr&gt;,
+## #   U.S. viewers &lt;chr&gt;, Prod. code &lt;chr&gt;</code></pre>
+<pre class="r"><code>James_Burrows[order(James_Burrows$`Title`),]</code></pre>
+<pre><code>## # A tibble: 15 x 10
+##    Date   Episode Title    `Directed by` `Written by`      Duration Summary     
+##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;       
+##  1 02/20~ 03-16   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross is gu~
+##  2 11/10~ 01-08   The One~ James Burrows &quot;Marta Kauffman ~       22 &quot;Monica and~
+##  3 02/13~ 03-15   The One~ James Burrows &quot;Michael Borkow&quot;        22 &quot;Ross seeks~
+##  4 11/17~ 01-09   The One~ James Burrows &quot;Jeff Greenstein~       22 &quot;The gang&#39;s~
+##  5 03/02~ 01-18   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;As Rachel ~
+##  6 02/26~ 04-15   The One~ James Burrows &quot;Story by : Ted ~       22 &quot;Chandler r~
+##  7 10/13~ 01-04   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Joey and C~
+##  8 01/05~ 01-11   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;Chandler&#39;s~
+##  9 05/11~ 01-23   The One~ James Burrows &quot;Story by : Davi~       22 &quot;As Carol g~
+## 10 11/03~ 01-07   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;When New Y~
+## 11 02/09~ 01-14   The One~ James Burrows &quot;Bill Lawrence&quot;         22 &quot;As Valenti~
+## 12 02/01~ 02-14   The One~ James Burrows &quot;Alexa Junge&quot;           22 &quot;The gang w~
+## 13 09/29~ 01-02   The One~ James Burrows &quot;David Crane &amp; M~       22 &quot;Ross finds~
+## 14 10/06~ 01-03   The One~ James Burrows &quot;Jeffrey Astrof ~       22 &quot;Monica bec~
+## 15 09/22~ 01-01   The Pil~ James Burrows &quot;David Crane &amp; M~       22 &quot;Monica and~
+## # ... with 3 more variables: Rating/Share &lt;chr&gt;, U.S. viewers &lt;chr&gt;, Prod.
+## #   code &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<div id="this-assignment-caused-various-headaches-and-ultimately-i-was-unable-to-complete-the-assignment-in-the-way-i-had-originally-envisioned-and-mapped-out-while-looking-at-the-dataset.-the-variable-names-with-spaces-in-them-caused-the-most-problems-particularly-since-the-name-contained-by.-i-will-keep-this-in-mind-in-the-future-when-i-create-a-dataset-as-it-may-cause-myself-and-others-headaches-down-the-road.-i-had-difficulties-this-time-around-finding-a-dataset-that-would-be-fully-suitable-for-the-assignment-which-is-shown-by-the-pivoting-part-of-my-assignment.-it-can-be-difficulty-to-determine-the-suitability-of-the-data-before-you-are-actually-in-the-data.-although-there-were-some-challenges-with-the-assignment-i-did-enjoy-it-because-i-do-like-a-challenge.-i-also-enjoyed-getting-to-use-this-unique-dataset-since-i-am-a-big-friends-fan" class="section level3">
+<h3>This assignment caused various headaches, and ultimately I was unable to complete the assignment in the way I had originally envisioned and mapped out while looking at the dataset. The variable names with spaces in them caused the most problems, particularly since the name contained “by”. I will keep this in mind in the future when I create a dataset as it may cause myself and others headaches down the road. I had difficulties this time around finding a dataset that would be fully suitable for the assignment, which is shown by the pivoting part of my assignment. It can be difficulty to determine the suitability of the data before you are actually in the data. Although there were some challenges with the assignment, I did enjoy it because I do like a challenge. I also enjoyed getting to use this unique dataset, since I am a big Friends fan!</h3>
+</div>
+</div>
