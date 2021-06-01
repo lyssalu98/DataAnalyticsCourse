@@ -64,9 +64,36 @@ read_csv("df-na.csv",
 ## Reading an Excel file
 
 ```{r}
-fav_food <- readxl::read_excel("favourite-food.xlsx") %>%
+library(readxl)
+fav_food <- read_excel("favourite-food.xlsx",  na = c("N/A", "99999")) %>%
   janitor::clean_names()
+
+fav_food <- fav_food %>%
+  mutate(
+    age = if_else(age == "five", "5", age),
+    age = as.numeric(age)
+    )
+glimpse(fav_food)
 
 fav_food
 ```
+
+## ETL of SES variable
+
+```{r}
+
+fav_food %>%
+  count(ses)
+
+fav_food <- fav_food %>%
+  mutate(ses = fct_relevel(ses, "Low", "Middle", "High"))
+fav_food %>%
+  count(ses)
+
+fav_food
+```
+
+
+
+
 
