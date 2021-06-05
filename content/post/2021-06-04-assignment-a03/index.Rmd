@@ -1,0 +1,196 @@
+---
+title: Assignment A03
+author: Alyssa van de Riet
+date: '2021-06-04'
+slug: assignment-a03
+categories:
+  - tidyverse
+tags: []
+---
+
+## Loading lego_sales.csv file and tidyverse
+```{r}
+library(tidyverse)
+library(dplyr)
+legos <- read_csv("lego_sales.csv")
+legos
+```
+
+### Most common first names
+
+#### Based in the results of the count function, as shown in common_names, the top three most common first names are Jackson (13 customers), Jacob (11 customers), and Joseph (11 customers).
+```{r}
+common_names <- legos %>% count(first_name) %>% arrange(desc(n))
+
+common_names
+
+
+```
+
+### Most common sets purchased
+#### Using the same method as the first part of the assignment, the most common themes, as shown in common_themes are Star Wars (75), Nexo Knights (64), and Gear (55).
+```{r}
+common_themes <- legos %>% count(theme) %>% arrange(desc(n))
+
+common_themes
+```
+
+### Most common subthemes
+#### The most common subtheme (excluding the "NA" values, which there were 42 of), was the "Ultimate" subtheme, which belongs to the Nexo Knights theme. Interestingly, although not shown in common_subtheme, all the "NA" values among the most popular themes belonged to this theme as well. 
+```{r}
+top3_theme <- c("Star Wars", "Nexo Knights", "Gear")
+common_subtheme <- legos %>% filter(theme %in% top3_theme) %>%
+                  count(subtheme, theme)  %>%
+                  arrange(desc(n)) %>%
+                  drop_na()
+
+common_subtheme
+```
+
+### Creating the age_group variable
+#### In this section I created the age_group variable, as shown in the legos_by_age dataframe, in the 15th column. 
+
+```{r}
+legos_by_age <- legos %>% mutate(age_group = case_when(
+                            age < 18 ~ "18 and under",
+                            age < 25 ~ "19-25",
+                            age < 35 ~ "26-35",
+                            age < 50 ~ "36-50",
+                            age > 51 ~ "51 and over"))
+          
+legos_by_age
+```
+
+### Determining age of randomly selected customers
+#### First, I determined the probability of a customer being within the 19-25 age group. You can see from the output that the probability of a customer being between the ages of 19 and 25 is 0.21, or 21%.
+```{r}
+
+num_customers <- legos_by_age %>% count(age_group)
+
+num_customers
+
+customers_total = sum(num_customers$n)
+
+prob19_25 = num_customers[2,2]/customers_total
+
+prob19_25
+
+
+```
+
+#### Then, I determined the probability of those customers also purchasing a Duplo theme set. The probability of a customer purchasing a Duplo themed set is 0.056 or 5.6%. When you combine that with the possibility of them being between the ages of 19 and 25, the probability lowers to 0.012 or 1.2%.
+
+```{r}
+sets_total = sum(common_themes$n)
+prob_duplo = common_themes[8, 2]/sets_total
+prob_duplo
+
+duplo_19_25 = prob_duplo*prob19_25
+
+duplo_19_25
+```
+
+#### When the tables are turned and the probability that someone who purchased a Duplo set was within the 19 to 25 age group, the probability increase to 0.257 or 25.7%. 
+
+```{r}
+duplo_by_age <- legos_by_age %>% filter(theme == "Duplo") %>%
+  count(theme, age_group) 
+                    
+duplo_by_age
+
+dup_19 = sum(duplo_by_age$n)
+
+prob_duplo_19_25 = duplo_by_age[2,3]/dup_19
+
+prob_duplo_19_25
+```
+
+### Largest number of lego sets
+#### Referring back to the num_customers subset, the 36-5o year age group has purchased the most sets, totalling 220 of the 620 sets purchased. 
+```{r}
+num_customers
+```
+
+### Determining which age group has spent the most money on lego sets
+#### Although not shown very clearly, the group that spent the most money on lego sets was also the 35-50 year age group. This group spent a total of $6836.80 on lego sets.
+```{r}
+money_customers <- legos_by_age %>% group_by(age_group) %>% count(set_id, age_group, us_price) %>% drop_na()
+
+money_u18 <- money_customers %>% filter(age_group == "18 and under")
+
+money_u18
+
+spent_u18 = money_u18$us_price*money_u18$n
+
+u18 = sum(spent_u18)
+
+u18
+
+money_u25 <- money_customers %>% filter(age_group == "19-25")
+
+money_u25
+
+spent_u25 = money_u25$us_price*money_u25$n
+
+u25 = sum(spent_u25)
+
+u25
+
+money_u35 <- money_customers %>% filter(age_group == "26-35")
+
+money_u35
+
+spent_u35 = money_u35$us_price*money_u35$n
+
+u35 = sum(spent_u35)
+
+u35
+
+money_u50 <- money_customers %>% filter(age_group == "36-50")
+
+money_u50
+
+spent_u50 = money_u50$us_price*money_u50$n
+
+u50 = sum(spent_u50)
+
+u50
+
+money_o51 <- money_customers %>% filter(age_group == "51 and over")
+
+money_o51
+
+spent_o51 = money_o51$us_price*money_o51$n
+
+o51 = sum(spent_o51)
+
+o51
+
+moneyspent = c(u18, u25, u35, u50, o51)
+moneyspent
+```
+
+### Creating my own visualisation
+#### For this question, I decided that I wanted to visualise the sets purchased by the under 18 age group, to determine which set was the most popular amoung this group. As shown in the plot, the City set was the most popular, with 3 sets purchased within the age group.
+
+```{r}
+pop_u18 <- legos_by_age %>% filter(age_group == "18 and under") %>% count(theme, age_group) %>% drop_na()
+
+pop_u18
+
+library(ggplot2)
+
+ggplot(pop_u18, aes(x = theme, y = n)) + geom_col() + ggtitle("Sets Purchased by the Under 18 Age Group") +
+  xlab("Set") + ylab("Number Purchased")
+```
+
+#### To change the plot, I added some colors. An additional thing to change would be to change the orientation of the bar labels, but I was uncertain how to do so. 
+
+```{r}
+library(RColorBrewer)
+ggplot(pop_u18, aes(x = theme, y = n, fill = "Spectral")) + geom_col() + ggtitle("Sets Purchased by the Under 18 Age Group") +
+  xlab("Set") + ylab("Number Purchased") + theme_light()
+```
+
+### Discussion
+#### This assignment was much more enjoyable than the last, as I found it made me more familiar with arguments that may be useful for me in the future, and involved less guessing and checking. I had some difficulties remembering how to do certain functions (like dropping missing variables), but luckily I had some notes that I found this in quite easily. I would like to learn how to change the orientation of my axes on plots. 

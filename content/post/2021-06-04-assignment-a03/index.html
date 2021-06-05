@@ -1,0 +1,143 @@
+---
+title: Assignment A03
+author: Alyssa van de Riet
+date: '2021-06-04'
+slug: assignment-a03
+categories:
+  - tidyverse
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="loading-lego_sales.csv-file-and-tidyverse" class="section level2">
+<h2>Loading lego_sales.csv file and tidyverse</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.1.1     v dplyr   1.0.6
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(dplyr)
+legos &lt;- read_csv(&quot;lego_sales.csv&quot;)</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   first_name = col_character(),
+##   last_name = col_character(),
+##   age = col_double(),
+##   phone_number = col_character(),
+##   set_id = col_double(),
+##   number = col_character(),
+##   theme = col_character(),
+##   subtheme = col_character(),
+##   year = col_double(),
+##   name = col_character(),
+##   pieces = col_double(),
+##   us_price = col_double(),
+##   image_url = col_character(),
+##   quantity = col_double()
+## )</code></pre>
+<pre class="r"><code>legos</code></pre>
+<pre><code>## # A tibble: 620 x 14
+##    first_name last_name    age phone_number set_id number theme  subtheme   year
+##    &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
+##  1 Kimberly   Beckstead     24 216-555-2549  24701 76062  DC Co~ Mighty M~  2018
+##  2 Neel       Garvin        35 819-555-3189  25626 70595  Ninja~ Rise of ~  2018
+##  3 Neel       Garvin        35 819-555-3189  24665 21031  Archi~ &lt;NA&gt;       2018
+##  4 Chelsea    Bouchard      41 &lt;NA&gt;          24695 31048  Creat~ &lt;NA&gt;       2018
+##  5 Chelsea    Bouchard      41 &lt;NA&gt;          25626 70595  Ninja~ Rise of ~  2018
+##  6 Chelsea    Bouchard      41 &lt;NA&gt;          24721 10831  Duplo  &lt;NA&gt;       2018
+##  7 Bryanna    Welsh         19 &lt;NA&gt;          24797 75138  Star ~ Episode V  2018
+##  8 Bryanna    Welsh         19 &lt;NA&gt;          24701 76062  DC Co~ Mighty M~  2018
+##  9 Caleb      Garcia-Wi~    37 907-555-9236  24730 41115  Frien~ &lt;NA&gt;       2018
+## 10 Caleb      Garcia-Wi~    37 907-555-9236  25611 21127  Minec~ Minifig-~  2018
+## # ... with 610 more rows, and 5 more variables: name &lt;chr&gt;, pieces &lt;dbl&gt;,
+## #   us_price &lt;dbl&gt;, image_url &lt;chr&gt;, quantity &lt;dbl&gt;</code></pre>
+<div id="most-common-first-names" class="section level3">
+<h3>Most common first names</h3>
+<div id="based-in-the-results-of-the-count-function-as-shown-in-common_names-the-top-three-most-common-first-names-are-jackson-13-customers-jacob-11-customers-and-joseph-11-customers." class="section level4">
+<h4>Based in the results of the count function, as shown in common_names, the top three most common first names are Jackson (13 customers), Jacob (11 customers), and Joseph (11 customers).</h4>
+<pre class="r"><code>common_names &lt;- legos %&gt;% count(first_name) %&gt;% arrange(desc(n))
+
+common_names</code></pre>
+<pre><code>## # A tibble: 211 x 2
+##    first_name     n
+##    &lt;chr&gt;      &lt;int&gt;
+##  1 Jackson       13
+##  2 Jacob         11
+##  3 Joseph        11
+##  4 Michael       10
+##  5 Audrey         8
+##  6 Connor         8
+##  7 Kaitlyn        8
+##  8 Lucas          8
+##  9 Amanda         7
+## 10 Joshua         7
+## # ... with 201 more rows</code></pre>
+</div>
+</div>
+<div id="most-common-sets-purchased" class="section level3">
+<h3>Most common sets purchased</h3>
+<div id="using-the-same-method-as-the-first-part-of-the-assignment-the-most-common-themes-as-shown-in-common_themes-are-star-wars-75-nexo-knights-64-and-gear-55." class="section level4">
+<h4>Using the same method as the first part of the assignment, the most common themes, as shown in common_themes are Star Wars (75), Nexo Knights (64), and Gear (55).</h4>
+<pre class="r"><code>common_themes &lt;- legos %&gt;% count(theme) %&gt;% arrange(desc(n))
+
+common_themes</code></pre>
+<pre><code>## # A tibble: 25 x 2
+##    theme            n
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 Star Wars       75
+##  2 Nexo Knights    64
+##  3 Gear            55
+##  4 Mixels          55
+##  5 City            45
+##  6 Friends         42
+##  7 Ninjago         38
+##  8 Duplo           35
+##  9 Bionicle        34
+## 10 Creator         25
+## # ... with 15 more rows</code></pre>
+</div>
+</div>
+<div id="most-common-subthemes" class="section level3">
+<h3>Most common subthemes</h3>
+<div id="the-most-common-subtheme-excluding-the-na-values-which-there-were-42-of-was-the-ultimate-subtheme-which-belongs-to-the-nexo-knights-theme.-interestingly-although-not-shown-in-common_subtheme-all-the-na-values-among-the-most-popular-themes-belonged-to-this-theme-as-well." class="section level4">
+<h4>The most common subtheme (excluding the “NA” values, which there were 42 of), was the “Ultimate” subtheme, which belongs to the Nexo Knights theme. Interestingly, although not shown in common_subtheme, all the “NA” values among the most popular themes belonged to this theme as well.</h4>
+<pre class="r"><code>top3_theme &lt;- c(&quot;Star Wars&quot;, &quot;Nexo Knights&quot;, &quot;Gear&quot;)
+common_subtheme &lt;- legos %&gt;% filter(theme %in% top3_theme) %&gt;%
+                  count(subtheme, theme)  %&gt;%
+                  arrange(desc(n)) %&gt;%
+                  drop_na()
+
+common_subtheme</code></pre>
+<pre><code>## # A tibble: 26 x 3
+##    subtheme          theme            n
+##    &lt;chr&gt;             &lt;chr&gt;        &lt;int&gt;
+##  1 Ultimate          Nexo Knights    22
+##  2 The Force Awakens Star Wars       15
+##  3 Buildable Figures Star Wars       11
+##  4 Episode V         Star Wars       10
+##  5 MicroFighters     Star Wars       10
+##  6 Battlefront       Star Wars        7
+##  7 Original Content  Star Wars        7
+##  8 Role-Play toys    Gear             7
+##  9 Stationery        Gear             7
+## 10 Episode III       Star Wars        6
+## # ... with 16 more rows</code></pre>
+</div>
+</div>
+<div id="creating-the-age_group-variable" class="section level3">
+<h3>Creating the age_group variable</h3>
+<pre class="r"><code>legos_by_age &lt;- legos %&gt;% mutate(age_group = case_when(
+                            age &lt; 18 ~ &quot;18 and under&quot;,
+                            age &lt; 25 ~ &quot;19-25&quot;,
+                            age &lt; 35 ~ &quot;26-35&quot;,
+                            age &lt; 50 ~ &quot;36-50&quot;,
+                            age &gt; 51 ~ &quot;51 and over&quot;))</code></pre>
+</div>
+</div>
