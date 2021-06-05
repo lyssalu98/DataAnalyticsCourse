@@ -133,11 +133,288 @@ common_subtheme</code></pre>
 </div>
 <div id="creating-the-age_group-variable" class="section level3">
 <h3>Creating the age_group variable</h3>
+<div id="in-this-section-i-created-the-age_group-variable-as-shown-in-the-legos_by_age-dataframe-in-the-15th-column." class="section level4">
+<h4>In this section I created the age_group variable, as shown in the legos_by_age dataframe, in the 15th column.</h4>
 <pre class="r"><code>legos_by_age &lt;- legos %&gt;% mutate(age_group = case_when(
                             age &lt; 18 ~ &quot;18 and under&quot;,
                             age &lt; 25 ~ &quot;19-25&quot;,
                             age &lt; 35 ~ &quot;26-35&quot;,
                             age &lt; 50 ~ &quot;36-50&quot;,
-                            age &gt; 51 ~ &quot;51 and over&quot;))</code></pre>
+                            age &gt; 51 ~ &quot;51 and over&quot;))
+          
+legos_by_age</code></pre>
+<pre><code>## # A tibble: 620 x 15
+##    first_name last_name    age phone_number set_id number theme  subtheme   year
+##    &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
+##  1 Kimberly   Beckstead     24 216-555-2549  24701 76062  DC Co~ Mighty M~  2018
+##  2 Neel       Garvin        35 819-555-3189  25626 70595  Ninja~ Rise of ~  2018
+##  3 Neel       Garvin        35 819-555-3189  24665 21031  Archi~ &lt;NA&gt;       2018
+##  4 Chelsea    Bouchard      41 &lt;NA&gt;          24695 31048  Creat~ &lt;NA&gt;       2018
+##  5 Chelsea    Bouchard      41 &lt;NA&gt;          25626 70595  Ninja~ Rise of ~  2018
+##  6 Chelsea    Bouchard      41 &lt;NA&gt;          24721 10831  Duplo  &lt;NA&gt;       2018
+##  7 Bryanna    Welsh         19 &lt;NA&gt;          24797 75138  Star ~ Episode V  2018
+##  8 Bryanna    Welsh         19 &lt;NA&gt;          24701 76062  DC Co~ Mighty M~  2018
+##  9 Caleb      Garcia-Wi~    37 907-555-9236  24730 41115  Frien~ &lt;NA&gt;       2018
+## 10 Caleb      Garcia-Wi~    37 907-555-9236  25611 21127  Minec~ Minifig-~  2018
+## # ... with 610 more rows, and 6 more variables: name &lt;chr&gt;, pieces &lt;dbl&gt;,
+## #   us_price &lt;dbl&gt;, image_url &lt;chr&gt;, quantity &lt;dbl&gt;, age_group &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="determining-age-of-randomly-selected-customers" class="section level3">
+<h3>Determining age of randomly selected customers</h3>
+<div id="first-i-determined-the-probability-of-a-customer-being-within-the-19-25-age-group.-you-can-see-from-the-output-that-the-probability-of-a-customer-being-between-the-ages-of-19-and-25-is-0.21-or-21." class="section level4">
+<h4>First, I determined the probability of a customer being within the 19-25 age group. You can see from the output that the probability of a customer being between the ages of 19 and 25 is 0.21, or 21%.</h4>
+<pre class="r"><code>num_customers &lt;- legos_by_age %&gt;% count(age_group)
+
+num_customers</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   age_group        n
+##   &lt;chr&gt;        &lt;int&gt;
+## 1 18 and under    17
+## 2 19-25          130
+## 3 26-35          178
+## 4 36-50          220
+## 5 51 and over     53
+## 6 &lt;NA&gt;            22</code></pre>
+<pre class="r"><code>customers_total = sum(num_customers$n)
+
+prob19_25 = num_customers[2,2]/customers_total
+
+prob19_25</code></pre>
+<pre><code>##           n
+## 1 0.2096774</code></pre>
+</div>
+<div id="then-i-determined-the-probability-of-those-customers-also-purchasing-a-duplo-theme-set.-the-probability-of-a-customer-purchasing-a-duplo-themed-set-is-0.056-or-5.6.-when-you-combine-that-with-the-possibility-of-them-being-between-the-ages-of-19-and-25-the-probability-lowers-to-0.012-or-1.2." class="section level4">
+<h4>Then, I determined the probability of those customers also purchasing a Duplo theme set. The probability of a customer purchasing a Duplo themed set is 0.056 or 5.6%. When you combine that with the possibility of them being between the ages of 19 and 25, the probability lowers to 0.012 or 1.2%.</h4>
+<pre class="r"><code>sets_total = sum(common_themes$n)
+prob_duplo = common_themes[8, 2]/sets_total
+prob_duplo</code></pre>
+<pre><code>##            n
+## 1 0.05645161</code></pre>
+<pre class="r"><code>duplo_19_25 = prob_duplo*prob19_25
+
+duplo_19_25</code></pre>
+<pre><code>##            n
+## 1 0.01183663</code></pre>
+</div>
+<div id="when-the-tables-are-turned-and-the-probability-that-someone-who-purchased-a-duplo-set-was-within-the-19-to-25-age-group-the-probability-increase-to-0.257-or-25.7." class="section level4">
+<h4>When the tables are turned and the probability that someone who purchased a Duplo set was within the 19 to 25 age group, the probability increase to 0.257 or 25.7%.</h4>
+<pre class="r"><code>duplo_by_age &lt;- legos_by_age %&gt;% filter(theme == &quot;Duplo&quot;) %&gt;%
+  count(theme, age_group) 
+                    
+duplo_by_age</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   theme age_group        n
+##   &lt;chr&gt; &lt;chr&gt;        &lt;int&gt;
+## 1 Duplo 18 and under     1
+## 2 Duplo 19-25            9
+## 3 Duplo 26-35            8
+## 4 Duplo 36-50           11
+## 5 Duplo 51 and over      4
+## 6 Duplo &lt;NA&gt;             2</code></pre>
+<pre class="r"><code>dup_19 = sum(duplo_by_age$n)
+
+prob_duplo_19_25 = duplo_by_age[2,3]/dup_19
+
+prob_duplo_19_25</code></pre>
+<pre><code>##           n
+## 1 0.2571429</code></pre>
+</div>
+</div>
+<div id="largest-number-of-lego-sets" class="section level3">
+<h3>Largest number of lego sets</h3>
+<div id="referring-back-to-the-num_customers-subset-the-36-5o-year-age-group-has-purchased-the-most-sets-totalling-220-of-the-620-sets-purchased." class="section level4">
+<h4>Referring back to the num_customers subset, the 36-5o year age group has purchased the most sets, totalling 220 of the 620 sets purchased.</h4>
+<pre class="r"><code>num_customers</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   age_group        n
+##   &lt;chr&gt;        &lt;int&gt;
+## 1 18 and under    17
+## 2 19-25          130
+## 3 26-35          178
+## 4 36-50          220
+## 5 51 and over     53
+## 6 &lt;NA&gt;            22</code></pre>
+</div>
+</div>
+<div id="determining-which-age-group-has-spent-the-most-money-on-lego-sets" class="section level3">
+<h3>Determining which age group has spent the most money on lego sets</h3>
+<div id="although-not-shown-very-clearly-the-group-that-spent-the-most-money-on-lego-sets-was-also-the-35-50-year-age-group.-this-group-spent-a-total-of-6836.80-on-lego-sets." class="section level4">
+<h4>Although not shown very clearly, the group that spent the most money on lego sets was also the 35-50 year age group. This group spent a total of $6836.80 on lego sets.</h4>
+<pre class="r"><code>money_customers &lt;- legos_by_age %&gt;% group_by(age_group) %&gt;% count(set_id, age_group, us_price) %&gt;% drop_na()
+
+money_u18 &lt;- money_customers %&gt;% filter(age_group == &quot;18 and under&quot;)
+
+money_u18</code></pre>
+<pre><code>## # A tibble: 17 x 4
+## # Groups:   age_group [1]
+##    age_group    set_id us_price     n
+##    &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
+##  1 18 and under  24618    15.0      1
+##  2 18 and under  24678    80.0      1
+##  3 18 and under  24697    13.0      1
+##  4 18 and under  24714    20.0      1
+##  5 18 and under  24723    20.0      1
+##  6 18 and under  24756     9.99     1
+##  7 18 and under  24765     9.99     1
+##  8 18 and under  24778    20.0      1
+##  9 18 and under  24806    25.0      1
+## 10 18 and under  24896    20.0      1
+## 11 18 and under  24902     4.99     1
+## 12 18 and under  24920    80.0      1
+## 13 18 and under  24987     9.99     1
+## 14 18 and under  25879     5.99     1
+## 15 18 and under  25893     3.99     1
+## 16 18 and under  25910     3.99     1
+## 17 18 and under  25922    80.0      1</code></pre>
+<pre class="r"><code>spent_u18 = money_u18$us_price*money_u18$n
+
+u18 = sum(spent_u18)
+
+u18</code></pre>
+<pre><code>## [1] 421.83</code></pre>
+<pre class="r"><code>money_u25 &lt;- money_customers %&gt;% filter(age_group == &quot;19-25&quot;)
+
+money_u25</code></pre>
+<pre><code>## # A tibble: 109 x 4
+## # Groups:   age_group [1]
+##    age_group set_id us_price     n
+##    &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
+##  1 19-25      24627   250.       1
+##  2 19-25      24660    15.0      2
+##  3 19-25      24661    15.0      1
+##  4 19-25      24663    30.0      1
+##  5 19-25      24664    60.0      1
+##  6 19-25      24665    40.0      1
+##  7 19-25      24666     9.99     2
+##  8 19-25      24668     9.99     1
+##  9 19-25      24671    15.0      1
+## 10 19-25      24672    15.0      1
+## # ... with 99 more rows</code></pre>
+<pre class="r"><code>spent_u25 = money_u25$us_price*money_u25$n
+
+u25 = sum(spent_u25)
+
+u25</code></pre>
+<pre><code>## [1] 3426.7</code></pre>
+<pre class="r"><code>money_u35 &lt;- money_customers %&gt;% filter(age_group == &quot;26-35&quot;)
+
+money_u35</code></pre>
+<pre><code>## # A tibble: 130 x 4
+## # Groups:   age_group [1]
+##    age_group set_id us_price     n
+##    &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
+##  1 26-35      24551    15.0      1
+##  2 26-35      24618    15.0      1
+##  3 26-35      24619     4.99     1
+##  4 26-35      24660    15.0      1
+##  5 26-35      24662    30.0      2
+##  6 26-35      24663    30.0      1
+##  7 26-35      24672    15.0      3
+##  8 26-35      24677    40.0      1
+##  9 26-35      24679    40.0      1
+## 10 26-35      24680     9.99     1
+## # ... with 120 more rows</code></pre>
+<pre class="r"><code>spent_u35 = money_u35$us_price*money_u35$n
+
+u35 = sum(spent_u35)
+
+u35</code></pre>
+<pre><code>## [1] 5023.22</code></pre>
+<pre class="r"><code>money_u50 &lt;- money_customers %&gt;% filter(age_group == &quot;36-50&quot;)
+
+money_u50</code></pre>
+<pre><code>## # A tibble: 152 x 4
+## # Groups:   age_group [1]
+##    age_group set_id us_price     n
+##    &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
+##  1 36-50      24548    15.0      1
+##  2 36-50      24551    15.0      1
+##  3 36-50      24621     4.99     1
+##  4 36-50      24625    30.0      1
+##  5 36-50      24659    30.0      3
+##  6 36-50      24664    60.0      1
+##  7 36-50      24665    40.0      2
+##  8 36-50      24669     9.99     2
+##  9 36-50      24670    15.0      2
+## 10 36-50      24672    15.0      1
+## # ... with 142 more rows</code></pre>
+<pre class="r"><code>spent_u50 = money_u50$us_price*money_u50$n
+
+u50 = sum(spent_u50)
+
+u50</code></pre>
+<pre><code>## [1] 6836.8</code></pre>
+<pre class="r"><code>money_o51 &lt;- money_customers %&gt;% filter(age_group == &quot;51 and over&quot;)
+
+money_o51</code></pre>
+<pre><code>## # A tibble: 44 x 4
+## # Groups:   age_group [1]
+##    age_group   set_id us_price     n
+##    &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
+##  1 51 and over  24618    15.0      1
+##  2 51 and over  24619     4.99     1
+##  3 51 and over  24663    30.0      1
+##  4 51 and over  24666     9.99     1
+##  5 51 and over  24683    20.0      1
+##  6 51 and over  24689    50.0      1
+##  7 51 and over  24697    13.0      1
+##  8 51 and over  24704     9.99     1
+##  9 51 and over  24709    30.0      2
+## 10 51 and over  24711    20.0      1
+## # ... with 34 more rows</code></pre>
+<pre class="r"><code>spent_o51 = money_o51$us_price*money_o51$n
+
+o51 = sum(spent_o51)
+
+o51</code></pre>
+<pre><code>## [1] 1537.47</code></pre>
+<pre class="r"><code>moneyspent = c(u18, u25, u35, u50, o51)
+moneyspent</code></pre>
+<pre><code>## [1]  421.83 3426.70 5023.22 6836.80 1537.47</code></pre>
+</div>
+</div>
+<div id="creating-my-own-visualisation" class="section level3">
+<h3>Creating my own visualisation</h3>
+<div id="for-this-question-i-decided-that-i-wanted-to-visualise-the-sets-purchased-by-the-under-18-age-group-to-determine-which-set-was-the-most-popular-amoung-this-group.-as-shown-in-the-plot-the-city-set-was-the-most-popular-with-3-sets-purchased-within-the-age-group." class="section level4">
+<h4>For this question, I decided that I wanted to visualise the sets purchased by the under 18 age group, to determine which set was the most popular amoung this group. As shown in the plot, the City set was the most popular, with 3 sets purchased within the age group.</h4>
+<pre class="r"><code>pop_u18 &lt;- legos_by_age %&gt;% filter(age_group == &quot;18 and under&quot;) %&gt;% count(theme, age_group) %&gt;% drop_na()
+
+pop_u18</code></pre>
+<pre><code>## # A tibble: 13 x 3
+##    theme                  age_group        n
+##    &lt;chr&gt;                  &lt;chr&gt;        &lt;int&gt;
+##  1 Bionicle               18 and under     1
+##  2 City                   18 and under     3
+##  3 Creator                18 and under     1
+##  4 DC Comics Super Heroes 18 and under     1
+##  5 Dimensions             18 and under     1
+##  6 Duplo                  18 and under     1
+##  7 Elves                  18 and under     1
+##  8 Gear                   18 and under     1
+##  9 Mixels                 18 and under     1
+## 10 Nexo Knights           18 and under     2
+## 11 Ninjago                18 and under     1
+## 12 Seasonal               18 and under     1
+## 13 Star Wars              18 and under     2</code></pre>
+<pre class="r"><code>library(ggplot2)
+
+ggplot(pop_u18, aes(x = theme, y = n)) + geom_col() + ggtitle(&quot;Sets Purchased by the Under 18 Age Group&quot;) +
+  xlab(&quot;Set&quot;) + ylab(&quot;Number Purchased&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="to-change-the-plot-i-added-some-colors.-an-additional-thing-to-change-would-be-to-change-the-orientation-of-the-bar-labels-but-i-was-uncertain-how-to-do-so." class="section level4">
+<h4>To change the plot, I added some colors. An additional thing to change would be to change the orientation of the bar labels, but I was uncertain how to do so.</h4>
+<pre class="r"><code>library(RColorBrewer)
+ggplot(pop_u18, aes(x = theme, y = n, fill = &quot;Spectral&quot;)) + geom_col() + ggtitle(&quot;Sets Purchased by the Under 18 Age Group&quot;) +
+  xlab(&quot;Set&quot;) + ylab(&quot;Number Purchased&quot;) + theme_light()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+</div>
+<div id="discussion" class="section level3">
+<h3>Discussion</h3>
+<div id="this-assignment-was-much-more-enjoyable-than-the-last-as-i-found-it-made-me-more-familiar-with-arguments-that-may-be-useful-for-me-in-the-future-and-involved-less-guessing-and-checking.-i-had-some-difficulties-remembering-how-to-do-certain-functions-like-dropping-missing-variables-but-luckily-i-had-some-notes-that-i-found-this-in-quite-easily.-i-would-like-to-learn-how-to-change-the-orientation-of-my-axes-on-plots" class="section level4">
+<h4>This assignment was much more enjoyable than the last, as I found it made me more familiar with arguments that may be useful for me in the future, and involved less guessing and checking. I had some difficulties remembering how to do certain functions (like dropping missing variables), but luckily I had some notes that I found this in quite easily. I would like to learn how to change the orientation of my axes on plots!</h4>
+</div>
 </div>
 </div>

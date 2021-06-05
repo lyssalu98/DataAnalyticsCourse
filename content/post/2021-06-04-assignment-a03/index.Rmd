@@ -193,4 +193,4 @@ ggplot(pop_u18, aes(x = theme, y = n, fill = "Spectral")) + geom_col() + ggtitle
 ```
 
 ### Discussion
-#### This assignment was much more enjoyable than the last, as I found it made me more familiar with arguments that may be useful for me in the future, and involved less guessing and checking. I had some difficulties remembering how to do certain functions (like dropping missing variables), but luckily I had some notes that I found this in quite easily. I would like to learn how to change the orientation of my axes on plots. 
+#### This assignment was much more enjoyable than the last, as I found it made me more familiar with arguments that may be useful for me in the future, and involved less guessing and checking. I had some difficulties remembering how to do certain functions (like dropping missing variables), but luckily I had some notes that I found this in quite easily. I would like to learn how to change the orientation of my axes on plots! 
