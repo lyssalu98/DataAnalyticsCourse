@@ -1,0 +1,14 @@
+name: DataAnalyticsCourse
+title: DataAnalyticsCourse
+username:
+account: lyssalu98
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4245613
+bundleId: 4694187
+url: https://lyssalu98.shinyapps.io/DataAnalyticsCourse/
+when: 1623192748.19103
+lastSyncTime: 1623192748.19103
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|.Rprofile|cat-lovers.csv|config.yaml|Friends Data.zip|index.Rmd|layouts/shortcodes/blogdown/postref.html|May18class.Rmd|netlify.toml|R/build.R|R/build2.R|static/.gitkeep|content|public|themes

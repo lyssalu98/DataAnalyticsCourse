@@ -1,0 +1,21 @@
+---
+title: Class Participation - June 8 Shiny
+author: Alyssa van de Riet
+date: '2021-06-08'
+slug: class-participation-june-8-shiny
+categories:
+  - shiny
+tags: []
+runtime: shiny
+output: html_document
+---
+
+```{r}
+library(shiny)
+
+```
+```
+
+<iframe height="800" width= "100%" frameboarder="no" src="https://lyssalu98.shinyapps.io/DataAnalyticsCourse/"> </iframe>
+```
+
