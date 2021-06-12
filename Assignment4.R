@@ -26,7 +26,8 @@ ui <- fluidPage(
       )
       ),
     mainPanel(
-      p("Using the selection box, you can sort through the iris specimens based on Species. You can also use the search function to search for a specific value!"),
+      p("Using the selection box, you can sort through the iris specimens based on Species. You can also use the search function to search for a specific value! The dataset can be accessed on ",
+      a("Kaggle", href = "https://www.kaggle.com/gpreda/iris-dataset")),
       dataTableOutput(outputId = ("Specimen_details")
     )
   )))
