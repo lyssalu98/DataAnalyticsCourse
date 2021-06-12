@@ -1,0 +1,14 @@
+name: DataAnalyticsCourse
+title:
+username:
+account: lyssalu98
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4245613
+bundleId: 4707399
+url: https://lyssalu98.shinyapps.io/DataAnalyticsCourse/
+when: 1623457746.65682
+lastSyncTime: 1623457746.65682
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|.Rprofile|32100024-eng/32100024.csv|32100024-eng/32100024_MetaData.csv|Assignment4TS.R|cat-lovers.csv|config.yaml|covid-speeches-words.rds|Friends Data.zip|gdhy_v1.2_v1.3_20190128.zip|index.Rmd|layouts/shortcodes/blogdown/postref.html|May18class.Rmd|meteorite-landings.csv|netlify.toml|R/build.R|R/build2.R|Shiny-Covid-Speeches.R|static/.gitkeep

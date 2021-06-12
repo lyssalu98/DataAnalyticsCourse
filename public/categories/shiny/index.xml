@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shiny on van de Riet Fundamentals of Analytics</title>
+    <link>/categories/shiny/</link>
+    <description>Recent content in shiny on van de Riet Fundamentals of Analytics</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/shiny/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Assignment A04: Shiny App</title>
+      <link>/2021/06/11/assignment-a04-shiny-app/</link>
+      <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/06/11/assignment-a04-shiny-app/</guid>
+      <description>Shiny App AssignmentFor this assignment I used the Iris dataset. I created a Shiny App that allowed the data to be sorted by species. I also wanted to allow the user to input a range of id numbers, but was unable to determine how to do that on my own. I did create a question on stackflow to try to get some help on how I may do this in the future, but unfortunately the question was not answered before I needed to submit the assignment.</description>
+    </item>
+    
+    <item>
+      <title>Class Participation - June 8 Shiny</title>
+      <link>/2021/06/08/class-participation-june-8-shiny/</link>
+      <pubDate>Tue, 08 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/06/08/class-participation-june-8-shiny/</guid>
+      <description>library(shiny)&amp;lt;iframe height=&amp;quot;800&amp;quot; width= &amp;quot;100%&amp;quot; frameboarder=&amp;quot;no&amp;quot; src=&amp;quot;https://lyssalu98.shinyapps.io/DataAnalyticsCourse/&amp;quot;&amp;gt; &amp;lt;/iframe&amp;gt;</description>
+    </item>
+    
+  </channel>
+</rss>

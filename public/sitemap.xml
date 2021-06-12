@@ -2,19 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/categories/assignment/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/06/11/assignment-a04-shiny-app/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/post/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/shiny/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2021-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/2021/06/08/class-participation-june-8-shiny/</loc>
+    <lastmod>2021-06-08T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/2021/06/04/assignment-a03/</loc>
     <lastmod>2021-06-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2021-06-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/</loc>
-    <lastmod>2021-06-04T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/categories/tidyverse/</loc>
-    <lastmod>2021-06-04T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/</loc>
     <lastmod>2021-06-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/data/</loc>
@@ -25,9 +37,6 @@
   </url><url>
     <loc>/2021/06/01/data-recoding-exercise/</loc>
     <lastmod>2021-06-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/assignment/</loc>
-    <lastmod>2021-05-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/2021/05/28/assignment-2-troubleshooting/</loc>
     <lastmod>2021-05-28T00:00:00+00:00</lastmod>

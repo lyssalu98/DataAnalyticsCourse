@@ -6,7 +6,16 @@
     <description>Recent content in assignment on van de Riet Fundamentals of Analytics</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/assignment/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/assignment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Assignment A04: Shiny App</title>
+      <link>/2021/06/11/assignment-a04-shiny-app/</link>
+      <pubDate>Fri, 11 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/06/11/assignment-a04-shiny-app/</guid>
+      <description>Shiny App AssignmentFor this assignment I used the Iris dataset. I created a Shiny App that allowed the data to be sorted by species. I also wanted to allow the user to input a range of id numbers, but was unable to determine how to do that on my own. I did create a question on stackflow to try to get some help on how I may do this in the future, but unfortunately the question was not answered before I needed to submit the assignment.</description>
+    </item>
+    
     <item>
       <title>Assignment 2 Troubleshooting</title>
       <link>/2021/05/28/assignment-2-troubleshooting/</link>

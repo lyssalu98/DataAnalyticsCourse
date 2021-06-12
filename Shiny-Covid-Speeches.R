@@ -11,6 +11,8 @@ library(plotly)
 
 covid_speeches_words <- read_rds("covid-speeches-words.rds")
 
+covid_speeches_words
+
 # Transform Data
 # csw <- covid_speeches_words %>% 
 #  filter(origin == "Scotland") %>%
